@@ -32,20 +32,24 @@ module.exports = defineConfig({
     
     setupNodeEvents(on, config) {
       require('cypress-mochawesome-reporter/plugin')(on);
+     // experimentalOrigin: true;   // allow multiple domains
+    //  experimentalSessionAndOrigin: true;
       
       // implement node event listeners here
     },
+  
     // defaultCommandTimeout: 10000, // Increase to 10 seconds
      experimentalStudio: true
   },
    
   env:{
 
-    BaseURL:'https://www.permission.io/',
-    URL:'https://ask.permission.io',
+    BaseURL:'https://www.permission.ai/',
+    URL:'https://ask.permission.ai',
+    userPassword: "MySecurePassword123!",
      }
 
-     
+    
 
 });
 

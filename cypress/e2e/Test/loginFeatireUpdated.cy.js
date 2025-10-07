@@ -4,9 +4,6 @@
 // Import necessary page objects and test data
 import LoginPage from "../../pages/LoginPage"
 import LoginData from "../../fixtures/LoginData.json"
-import InitialPage from "../../pages/initialPage"
-
-
 
 //Task 1
 const LoginObj = new LoginPage()
@@ -28,9 +25,8 @@ describe('Login Page', () => {
       cy.clearAllCookies();
       cy.clearAllLocalStorage();
 
-     // cy.login(email,password); // from command line
-
       LoginObj.openBaseURL() //lunch base URL
+      cy.contains('login').invoke('removeAttr','target').click();
       
  
 
@@ -40,33 +36,23 @@ describe('Login Page', () => {
       
 
       // Wait for the cookie consent banner to become visible and click it
-      // Using a smart wait with .should('be.visible') is better than a hard wait
-
+      
       cy.wait(800); // Waits for 2 seconds
       cy.get('#onetrust-accept-btn-handler').click({ force: true })
 
-      const initialPageObj = new InitialPage();
-
-      initialPageObj.clickLoginLink();  //clicking Login button from Base URL
-
-      // Use cy.origin() to perform all subsequent actions on the new domain.
-      // The email and password data are passed as arguments to the new context.
-
-      cy.origin(
-         'https://ask.permission.ai', //open 2nd url
-         { args: { email: LoginData.email, password: LoginData.password } },
-         ({ email, password }) => {
-
+    
+     
             Cypress.on('uncaught:exception', (err, runnable) => {
-               // returning false here prevents Cypress
-               // inside the cy.origin() method from failing the test
+             
                return false
             })
-              // ✅ Only wait for reCAPTCHA if it’s there
+              
                    
+            cy.get('#onetrust-accept-btn-handler').click({ force: true })
 
-            cy.get('input[type="email"]').type(email, { force: true });   // replace with correct selector
-            cy.get('input[type="password"]').type(password, { force: true }); // replace with correct selector
+
+            cy.get('input[type="email"]').type(LoginData.email, { force: true });   // replace with correct selector
+            cy.get('input[type="password"]').type(LoginData.password, { force: true }); // replace with correct selector
 
             cy.get('button[type="submit"]').click(); // replace with correct selector
 
@@ -86,12 +72,11 @@ describe('Login Page', () => {
 
 
 
-         })
-
-
+        
    })
 
-   //=================== Test login failure with incorrect credentials ======
+
+ //=================== Test login failure with incorrect credentials ======
 
    it('Test login failure with incorrect credentials', () => {
 
@@ -101,28 +86,16 @@ describe('Login Page', () => {
       cy.wait(800); // Waits for 2 seconds
       cy.get('#onetrust-accept-btn-handler').click({ force: true })
 
-      const initialPageObj = new InitialPage();
-
-      initialPageObj.clickLoginLink();  //clicking Login button from Base URL
-
-      // Use cy.origin() to perform all subsequent actions on the new domain.
-      // The email and password data are passed as arguments to the new context.
-
-      cy.origin(
-         'https://ask.permission.io', //open 2nd url
-         { args: { email: LoginData.Invalidemail, password: LoginData.Invalidpassword } },
-         ({ email, password }) => {
-
-            Cypress.on('uncaught:exception', (err, runnable) => {
+ 
+                Cypress.on('uncaught:exception', (err, runnable) => {
                // returning false here prevents Cypress
                // inside the cy.origin() method from failing the test
                return false
             })            
 
 
-           // cy.contains('login').invoke('removeAttr','target').click();
-            cy.get('input[type="email"]').type(email, { force: true });   // replace with correct selector
-            cy.get('input[type="password"]').type(password, { force: true }); // replace with correct selector
+           cy.get('input[type="email"]').type(LoginData.email, { force: true });   // replace with correct selector
+            cy.get('input[type="password"]').type(LoginData.Invalidpassword, { force: true }); // replace with correct selector
 
             cy.get('button[type="submit"]').click(); // replace with correct selector
 
@@ -133,14 +106,12 @@ describe('Login Page', () => {
            .should('be.visible')
 
 
-         })
-
-
    })
 
+   
    //=================== Test account lockout after multiple failed login attempts ======
 
-   it('should lock account after multiple failed login attempts', () => {
+   it.only('should lock account after multiple failed login attempts', () => {
 
       // Wait for the cookie consent banner to become visible and click it
       // Using a smart wait with .should('be.visible') is better than a hard wait
@@ -148,18 +119,7 @@ describe('Login Page', () => {
       cy.wait(900); // Waits for 2 seconds
       cy.get('#onetrust-accept-btn-handler').click({ force: true })
 
-      const initialPageObj = new InitialPage();
-
-      initialPageObj.clickLoginLink();  //clicking Login button from Base URL
-
-      // Use cy.origin() to perform all subsequent actions on the new domain.
-      // The email and password data are passed as arguments to the new context.
-
-      cy.origin(
-         'https://ask.permission.ai/login', //open 2nd url
-         { args: { email: LoginData.ValidEmail, password: LoginData.Invalidpassword } },
-         ({ email, password }) => {
-
+     
             Cypress.on('uncaught:exception', (err, runnable) => {
                // returning false here prevents Cypress
                // inside the cy.origin() method from failing the test
@@ -167,10 +127,10 @@ describe('Login Page', () => {
             })
 
 
-            for (let i = 0; i < 8; i++) {   
+            for (let i = 0; i < 7; i++) {   
                cy.wait(900);
-            cy.get('input[type="email"]').clear().type(email, { force: true });   // replace with correct email
-            cy.get('input[type="password"]').clear().type(password, { force: true }); // replace with incorrect pw
+            cy.get('input[type="email"]').clear().type(LoginData.ValidEmail, { force: true });   // replace with correct email
+            cy.get('input[type="password"]').clear().type(LoginData.Invalidpassword, { force: true }); // replace with incorrect pw
 
             cy.get('button[type="submit"]').click(); // replace with correct selector
 
@@ -185,8 +145,5 @@ describe('Login Page', () => {
          })
 
 
-   })
-
-
-
+ 
 })

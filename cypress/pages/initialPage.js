@@ -4,7 +4,8 @@
 class InitialPage {
     constructor() {
         this.locators = {
-            loginLink: '.is-text-copy'   // update selector if needed
+            loginLink : '.nav_main_btn-group > [data-wf--button-main--style="primary"] > .clickable_wrap > .clickable_link'
+           // loginLink: '.is-text-copy'   // update selector if needed
         };
     }
 

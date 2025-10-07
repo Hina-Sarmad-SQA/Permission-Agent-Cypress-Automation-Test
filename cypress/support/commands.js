@@ -27,9 +27,14 @@
 
 // Login function
 
-Cypress.Commands.add('login', (email, password) => {
+Cypress.Commands.add("login", (email, password) => {
   
     // Type the username and password into the respective fields
+    //cy.visit('https://www.permission.io/')
+   // cy.wait(800); // Waits for 2 seconds
+   //  cy.get('#onetrust-accept-btn-handler').click({ force: true })
+  //  cy.get('').click();
+ // cy.get('.nav_main_btn-group > [data-wf--button-main--style="primary"] > .clickable_wrap > .clickable_link').click()
   cy.get('input[type="email"]').type(email);
   cy.get('input[type="password"]').type(password);
 

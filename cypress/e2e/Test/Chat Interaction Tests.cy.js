@@ -109,7 +109,7 @@ cy.wait(1000); // Waits for 2 seconds
 
 })
 
-it.only("Task # 3 : Validate timestamps on messages", () => {
+it("Task # 3 : Validate timestamps on messages", () => {
     // ✅ Verify side menu is visible
     
       cy.wait(800); // Waits for 2 seconds

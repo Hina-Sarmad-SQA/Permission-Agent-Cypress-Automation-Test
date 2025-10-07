@@ -48,7 +48,7 @@ describe('Basic Chat Functionality:', () => {
     // Clear cookies and local storage to ensure a clean session for each test
       cy.clearAllCookies();
       cy.clearAllLocalStorage();
-      LoginObj.openURL() //lunch base URL
+      LoginObj.openBaseURL() //lunch base URL
     //  login(LoginData.email,LoginData.password)
 
   })
@@ -59,9 +59,12 @@ describe('Basic Chat Functionality:', () => {
     
       cy.wait(800); // Waits for 2 seconds
       cy.get('#onetrust-accept-btn-handler').click({ force: true }) //cookie
-      cy.get('button[class="inline-flex items-center justify-around whitespace-nowrap rounded-md disabled:pointer-events-none w-fit dark:text-white bg-gray-50 hover:bg-gray-100 dark:bg-primary-900 dark:hover:bg-gray-900 hover:shadow-sm disabled:bg-gray-100 disabled:text-gray-300 h-12 px-md py-sm text-md-semibold gap-xs rounded-md w-full"]').click()
+      cy.get('.nav_main_btn-group > [data-wf--button-main--style="primary"] > .clickable_wrap > .clickable_link').click();
+
+    //  cy.get('button[class="inline-flex items-center justify-around whitespace-nowrap rounded-md disabled:pointer-events-none w-fit dark:text-white bg-gray-50 hover:bg-gray-100 dark:bg-primary-900 dark:hover:bg-gray-900 hover:shadow-sm disabled:bg-gray-100 disabled:text-gray-300 h-12 px-md py-sm text-md-semibold gap-xs rounded-md w-full"]').click()
   
     cy.login(LoginData.email,LoginData.password)
+
 
     cy.wait(20000); // Waits for 2 seconds
 //    cy.get('.flex.w-full.items-center.gap-xs', { timeout: 10000 }).should('be.visible');
@@ -111,7 +114,7 @@ cy.wait(1000); // Waits for 2 seconds
     cy.login(LoginData.email,LoginData.password)
 
     cy.wait(30000); // Waits for 2 seconds
-cy.get(selectors.msginputbox, { timeout: 1000 }).type("How your data is protected?"); // message input box displayed
+ cy.get(selectors.msginputbox, { timeout: 1000 }).type("How your data is protected?"); // message input box displayed
  cy.get(selectors.sendbtt,  { timeout: 1000 }).click() // msg sending button displayed
  cy.wait(10000); 
  cy.get(selectors.sendtext).should('have.text', 'How your data is protected?')
