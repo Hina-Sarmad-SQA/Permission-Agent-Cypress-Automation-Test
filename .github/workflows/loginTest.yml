@@ -1,4 +1,4 @@
-name: End-to-end tests
+name: Login build
 on: push
 jobs:
   cypress-run:
@@ -8,5 +8,7 @@ jobs:
         uses: actions/checkout@v4
       # Install npm dependencies, cache them correctly
       # and run all Cypress tests
-      - name: Cypress run D:\Permission-Agent-Cypress-Automation-Test\cypress\e2e\Test\loginFeatireUpdated.cy.js
+      - name: Cypress run
         uses: cypress-io/github-action@v6
+        with:
+          command : npm run test:Login

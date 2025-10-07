@@ -4,6 +4,7 @@
   "description": "homework for QA post",
   "main": "index.js",
   "scripts": {
+    "test:Login": "npx cypress run --spec cypress/e2e/tests/loginFeatureUpdated.cy.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
